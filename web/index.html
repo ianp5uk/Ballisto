@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; form-action 'none'" />
+<meta name="color-scheme" content="light dark" />
+<title>Ballisto</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<main>
+  <header class="app-header">
+    <div class="brand">
+      <h1>Ballisto</h1>
+      <p class="tagline">A basic ballistic computer for target shooting</p>
+    </div>
+    <button id="menuBtn" class="burger" type="button" aria-label="Menu" aria-haspopup="true" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <nav id="menu" class="menu hidden" aria-label="Main menu">
+      <button type="button" data-go="welcome">Welcome Screen</button>
+      <button type="button" data-go="ammo">Ammo Input</button>
+      <button type="button" data-go="rifle">Rifle Input</button>
+      <button type="button" data-go="compute">Compute</button>
+      <button type="button" data-go="db">Edit Database</button>
+      <button type="button" data-go="exit" class="menu-exit">Exit</button>
+    </nav>
+  </header>
+
+  <!-- ================= WELCOME ================= -->
+  <section id="screen-welcome" class="card screen hidden">
+    <h2>Welcome</h2>
+    <p>First you must create at least one ammo set by entering its parameters. You can have as many ammo sets as desired.
+      Next you create at least one firearm and input its parameters. You will link the firearm to the ammo when you use this computer.</p>
+    <p class="muted">This application is provided free of charge and without any guarantee. It is designed for simple target shooting
+      over short to medium range. Use for long distance is likely to be inaccurate as there is no correction for the rotation of the earth,
+      no weather input (a standard sea-level atmosphere is assumed) and spin drift is only a rough estimate.</p>
+    <div class="button-row">
+      <button type="button" class="primary" id="welcomeNext">Next</button>
+      <button type="button" class="danger-solid" id="welcomeExit">Exit</button>
+    </div>
+  </section>
+
+  <!-- ================= AMMO ================= -->
+  <section id="screen-ammo" class="card screen hidden">
+    <h2>Ammo</h2>
+    <div class="note-box">
+      <p>Please add the ammo parameters. You may add any number of different ammo sets, each identified by the name you give it.
+        For .22LR it is best to include the brand and type, e.g. "Eley Club".</p>
+      <p>The ideal muzzle velocity is measured for your own rifle. Otherwise use the manufacturer's figure.
+        Grey values are defaults or examples &ndash; type over them.</p>
+    </div>
+    <div id="ammoMode" class="mode-banner hidden"></div>
+    <div class="form-grid">
+      <label for="aName">Ammo name:</label>
+      <div class="name-cell span2"><span class="edit-prefix hidden" id="aEditPrefix">EDIT:</span><input type="text" id="aName" maxlength="32" placeholder="e.g. Eley Club" autocomplete="off" /></div>
+
+      <label for="aWeight">Bullet weight:</label>
+      <input type="text" inputmode="decimal" id="aWeight" placeholder="40" autocomplete="off" />
+      <select id="aWeightUnit" class="default"><option value="grain">Grains</option><option value="gram">Grams</option></select>
+
+      <label for="aMv">Muzzle velocity:</label>
+      <input type="text" inputmode="numeric" id="aMv" placeholder="1050" autocomplete="off" />
+      <select id="aMvUnit" class="default"><option value="fps">ft/s</option><option value="mps">m/s</option></select>
+
+      <label for="aBc">Ballistic coefficient:</label>
+      <input type="text" inputmode="decimal" id="aBc" class="default" autocomplete="off" />
+      <span class="hint">Must match the drag model</span>
+
+      <label for="aDrag">Drag model:</label>
+      <select id="aDrag" class="default"></select>
+      <span class="hint">RA4 suits .22LR</span>
+    </div>
+    <div class="button-row">
+      <button type="button" class="primary" id="aSave">Save</button>
+      <button type="button" class="primary" id="aNext">Next</button>
+      <button type="button" class="danger-solid" id="aCancel">Cancel</button>
+    </div>
+    <p class="recent-label">Recently saved ammo:</p>
+    <div class="recent-box" id="aRecent"></div>
+    <div class="button-row end">
+      <button type="button" class="accent" data-go="compute">Compute</button>
+    </div>
+  </section>
+
+  <!-- ================= RIFLE ================= -->
+  <section id="screen-rifle" class="card screen hidden">
+    <h2>Rifle</h2>
+    <div class="note-box">
+      <p>Please add the rifle parameters. You can add one or multiples.</p>
+      <p>For most short target ranges up to 100 m the bore twist &amp; rifling direction will have negligible effect on zero.
+        You can leave the defaults if unsure.</p>
+    </div>
+    <div id="rifleMode" class="mode-banner hidden"></div>
+    <div class="form-grid">
+      <label for="rName">Rifle name:</label>
+      <div class="name-cell span2"><span class="edit-prefix hidden" id="rEditPrefix">EDIT:</span><input type="text" id="rName" maxlength="32" placeholder="e.g. CZ 457 Thumbhole / MDT" autocomplete="off" /></div>
+
+      <label for="rClick">Sight adjustment:</label>
+      <input type="text" inputmode="decimal" id="rClick" class="default" autocomplete="off" />
+      <select id="rClickUnit" class="default"><option value="MRAD">MRAD</option><option value="MOA">MOA</option></select>
+      <span></span><span class="hint below span2">Click increment</span>
+
+      <label for="rSight">Sight height:</label>
+      <input type="text" inputmode="decimal" id="rSight" placeholder="4.5" autocomplete="off" />
+      <select id="rSightUnit" class="default"><option value="cm">cm</option><option value="inch">inches</option></select>
+      <span></span><span class="hint below span2">Sight centreline above bore centre</span>
+
+      <label for="rZero">Current zero range:</label>
+      <input type="text" inputmode="numeric" id="rZero" placeholder="25" autocomplete="off" />
+      <select id="rZeroUnit" class="default"><option value="yard">Yards</option><option value="m">Metres</option></select>
+
+      <label for="rTwist">Bore twist rate:</label>
+      <input type="text" inputmode="decimal" id="rTwist" class="default" autocomplete="off" />
+      <span></span>
+      <span></span><span class="hint below span2">1 turn in 16" &rArr; 16</span>
+
+      <label for="rTwistDir">Rifling twist direction:</label>
+      <select id="rTwistDir" class="default"><option value="R">Right - clockwise</option><option value="L">Left - anticlockwise</option></select>
+      <span class="hint">Right is most common</span>
+    </div>
+    <div class="button-row">
+      <button type="button" class="primary" id="rSave">Save</button>
+      <button type="button" class="primary" id="rNext">Next</button>
+      <button type="button" class="danger-solid" id="rCancel">Cancel</button>
+    </div>
+    <p class="recent-label">Recently saved rifles:</p>
+    <div class="recent-box" id="rRecent"></div>
+    <div class="button-row end">
+      <button type="button" class="accent" data-go="compute">Compute</button>
+    </div>
+  </section>
+
+  <!-- ================= COMPUTE ================= -->
+  <section id="screen-compute" class="card screen hidden">
+    <h2 class="center">Compute Changes to Zero</h2>
+    <div class="form-grid compute-grid">
+      <label for="cRifle">Rifle name:</label>
+      <select id="cRifle" class="wide span2"></select>
+
+      <label for="cAmmo">Ammo name:</label>
+      <select id="cAmmo" class="wide span2"></select>
+
+      <label>Starting range:</label>
+      <output id="cZero" class="readonly">&ndash;</output>
+      <output id="cZeroUnit" class="readonly unit-out"></output>
+      <span></span><span class="hint below span2">Zero set when rifle entered</span>
+
+      <label for="cRange">Required range:</label>
+      <input type="text" inputmode="numeric" id="cRange" maxlength="5" autocomplete="off" />
+      <select id="cRangeUnit"><option value="yard">Yards</option><option value="m">Metres</option></select>
+      <span></span><span class="hint below span2">The range you want to change to</span>
+
+      <label for="cWindMode">Windage input:</label>
+      <select id="cWindMode" class="wide span2"><option value="miss">Miss correction</option><option value="wind">Crosswind</option></select>
+
+      <label for="cWindVal" id="cWindValLabel">Windage correction:</label>
+      <div class="windrow">
+        <input type="text" inputmode="decimal" id="cWindVal" autocomplete="off" />
+        <select id="cMissDir"><option value="L">&larr; move left</option><option value="R">move right &rarr;</option></select>
+        <select id="cWindDir" class="hidden"><option value="LR">L &rarr; R</option><option value="RL">R &rarr; L</option></select>
+      </div>
+      <div>
+        <select id="cMissUnit"><option value="cm">cm</option><option value="inch">inches</option></select>
+        <select id="cWindUnit" class="hidden"><option value="mps">m/s</option><option value="fps">ft/s</option><option value="mph">mph</option></select>
+      </div>
+    </div>
+    <div class="button-row end">
+      <button type="button" class="accent" id="cCompute">Compute</button>
+    </div>
+
+    <div id="cError" class="banner error hidden"></div>
+    <div id="cResult" class="hidden">
+      <h3 class="solution">Solution</h3>
+      <div class="solution-box">
+        <h4>Vertical (range) adjust</h4>
+        <table class="sol"><tbody id="cVert"></tbody></table>
+        <h4>Horizontal (windage) adjust</h4>
+        <table class="sol"><tbody id="cHoriz"></tbody></table>
+        <p class="sol-note" id="cSolNote"></p>
+        <p id="cInfo" class="info"></p>
+        <p id="cWarn" class="warn-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= DATABASE ================= -->
+  <section id="screen-db" class="card screen hidden">
+    <h2>Edit Databases</h2>
+    <p class="muted small">The databases of parameters you have created are presented here as tables. You may edit values, copy or delete rows.</p>
+    <div class="button-row tabs">
+      <button type="button" id="dbTabAmmo" class="tab">Ammo</button>
+      <button type="button" id="dbTabRifle" class="tab">Rifle</button>
+    </div>
+    <div class="table-wrap" id="dbWrap"><table class="sheet" id="dbTable"></table></div>
+    <div class="button-row">
+      <button type="button" class="danger-solid" id="dbDeleteAll">Delete All</button>
+    </div>
+    <div class="button-row end">
+      <button type="button" class="primary" id="dbExit">Exit App</button>
+    </div>
+  </section>
+
+  <footer class="app-footer">Ballisto <span id="version"></span> &middot; offline &middot; no data leaves this device</footer>
+</main>
+
+<div id="toast" class="toast hidden" role="status"></div>
+
+<div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <p id="modalText"></p>
+    <div class="button-row end">
+      <button type="button" class="secondary" id="modalCancel">Cancel</button>
+      <button type="button" class="danger-solid" id="modalOk">OK</button>
+    </div>
+  </div>
+</div>
+
+<script src="dragtables.js"></script>
+<script src="ballistics.js"></script>
+<script src="storage.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

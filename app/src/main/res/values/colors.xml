@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Same palette as TweetDelete / web/style.css. -->
+    <color name="b_primary">#01696F</color>
+    <color name="b_bg_light">#F7F6F2</color>
+    <color name="b_bg_dark">#171614</color>
+</resources>

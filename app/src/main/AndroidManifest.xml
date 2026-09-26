@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Intentionally NO permissions at all: no INTERNET, no sensors, no storage.
+         Without android.permission.INTERNET the app cannot open any network
+         socket, so it is unable to connect outside the device. -->
+
+    <application
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Ballisto"
+        android:usesCleartextTraffic="false">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboardHidden|keyboard|uiMode|density|fontScale"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing" android:value="false" />
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut" android:value="true" />
+    </application>
+</manifest>
