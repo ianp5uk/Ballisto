@@ -37,7 +37,7 @@ is one copy of the UI and solver.
 
 ## Building
 
-Same toolchain as TweetDelete: JDK 17, Android SDK platform 34, Gradle 8.7
+Toolchain: TweetDelete: JDK 17, Android SDK platform 34, Gradle 8.7
 (wrapper included), AGP 8.5.2, Kotlin 1.9.24.
 
 ```bash
@@ -45,7 +45,7 @@ Same toolchain as TweetDelete: JDK 17, Android SDK platform 34, Gradle 8.7
 # -> app/build/outputs/apk/release/app-release.apk  (~65 KB)
 ```
 
-If the project sits on a `noexec` mount (e.g. the NAS), run it as
+If the project sits on a `noexec` mount (e.g. NAS), run it as
 `bash ./gradlew :app:assembleRelease` or build from a local copy.
 
 Signing: the release build is signed with `keystore/ballisto-release.keystore`
@@ -67,8 +67,8 @@ the database in the browser's localStorage instead of a file).
 
 ## Installing the APK
 
-Copy `Ballisto-1.0.0.apk` to the phone and open it, allowing "Install unknown
-apps" for the file manager when prompted, or `adb install Ballisto-1.0.0.apk`.
+Copy `Ballisto-1.0.2.apk`, or whatever it is named, to the phone and open it, allowing "Install unknown
+apps" for the file manager when prompted, or `adb install Ballisto-1.0.2.apk`.
 
 ## Using it
 
