@@ -156,14 +156,16 @@
       <select id="cWindMode" class="wide span2"><option value="miss">Miss correction</option><option value="wind">Crosswind</option></select>
 
       <label for="cWindVal" id="cWindValLabel">Windage correction:</label>
-      <div class="windrow">
-        <input type="text" inputmode="decimal" id="cWindVal" autocomplete="off" />
-        <select id="cMissDir"><option value="L">&larr; move left</option><option value="R">move right &rarr;</option></select>
-        <select id="cWindDir" class="hidden"><option value="LR">L &rarr; R</option><option value="RL">R &rarr; L</option></select>
-      </div>
+      <input type="text" inputmode="decimal" id="cWindVal" autocomplete="off" />
       <div>
         <select id="cMissUnit"><option value="cm">cm</option><option value="inch">inches</option></select>
         <select id="cWindUnit" class="hidden"><option value="mps">m/s</option><option value="fps">ft/s</option><option value="mph">mph</option></select>
+      </div>
+
+      <span></span>
+      <div class="span2">
+        <select id="cMissDir" class="wide"><option value="L">&larr; move shot left</option><option value="R">move shot right &rarr;</option></select>
+        <select id="cWindDir" class="wide hidden"><option value="LR">Wind from left: L &rarr; R</option><option value="RL">Wind from right: R &rarr; L</option></select>
       </div>
     </div>
     <div class="button-row end">

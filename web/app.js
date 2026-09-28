@@ -6,7 +6,7 @@
 (function () {
   'use strict';
 
-  var VERSION = '1.0.1';
+  var VERSION = '1.0.2';
   var B = window.Ballistics, S = window.BallistoStorage, U = B.units;
   var DEF = { bc: '0.112', drag: 'RA4', clickMRAD: '0.1', clickMOA: '0.25', twist: '16' };
 

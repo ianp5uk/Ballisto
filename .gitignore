@@ -1,4 +1,3 @@
-/Ballisto_Archive/
 /app/build/
 /build/
 .gradle/
@@ -9,4 +8,6 @@ local.properties
 .idea/
 *.iml
 .DS_Store
-/keystore/ballisto-release.keystore
+
+# Local archive of old versions (not part of the repository)
+/Ballisto_Archive/
