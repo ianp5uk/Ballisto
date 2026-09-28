@@ -38,7 +38,7 @@ is one copy of the UI and solver.
 
 ## Building
 
-Toolchain: TweetDelete: JDK 17, Android SDK platform 34, Gradle 8.7
+Toolchain: JDK 17, Android SDK platform 34, Gradle 8.7
 (wrapper included), AGP 8.5.2, Kotlin 1.9.24.
 
 ```bash
