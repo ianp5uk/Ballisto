@@ -1,4 +1,5 @@
 # Ballisto – a basic ballistic computer for target shooting (Android 10+)
+## Built using Opus 5.5
 
 Ballisto tells you how many clicks to move your sight when you change range
 from the distance the rifle is zeroed at, and estimates the windage correction
