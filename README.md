@@ -103,8 +103,7 @@ is included in Android backup / device transfer.
   ALGORITHMS.md §3).
 - Bullet weight only affects the energy figure; with a G-model BC the path does
   not depend on it.
-- Not yet tested on a physical device by the author of this build – please
-  report anything that looks wrong on your phone's WebView version.
+- Limited ballistic testing.
 
 ## Licence
 
